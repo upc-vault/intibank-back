@@ -6,26 +6,31 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Account {
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String cardNumber;
+    @Enumerated(EnumType.STRING)
+    private TransactionType type;
 
     @Column(nullable = false)
-    private String cvv;
+    private Double amount;
+
+    @Column
+    private String notes;
 
     @Column(nullable = false)
-    private Double balance;
+    private Date timestamp;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    private Account account;
 }
