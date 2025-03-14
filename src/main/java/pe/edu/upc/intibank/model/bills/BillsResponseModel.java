@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -15,9 +16,9 @@ import java.util.Date;
 @Builder
 public class BillsResponseModel {
     private String estadoPago;
-    private Date fechaEmision;
-    private Date fechaVencimiento;
-    private BigDecimal monto;
+    private LocalDate fechaEmision;
+    private LocalDate fechaVencimiento;
+    private Double monto;
     private String numeroSuministro;
 
 }

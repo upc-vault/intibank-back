@@ -10,4 +10,7 @@ public interface IBillsRepositorio extends JpaRepository<Bills, Long> {
 
     List<Bills> findByNumeroSuministro(String suministro);
     List<Bills> findAllByUser(User user);
+
+    List<Bills> findAllByNumeroSuministroAndEstadoPago(String numeroSuministro, String estadoPago);
+
 }
