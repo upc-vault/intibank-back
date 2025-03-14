@@ -1,9 +1,4 @@
 
---Eliminar transaction_type_check del objeto transaction
-ALTER TABLE IF EXISTS public.transaction
-    ADD CONSTRAINT transaction_type_check CHECK (type::text = ANY (ARRAY['DEPOSIT'::character varying, 'TRANSFER'::character varying, 'WITHDRAW'::character varying]::text[]));
-
-
 INSERT INTO public.bank_user(email, name, password, phone, role) VALUES ('u201723834@upc.edu.pe', 'Christian Enrique Delgado Sanchez', 'intibank', '956254710', 'USER');
 INSERT INTO public.bank_user(email, name, password, phone, role) VALUES ('u202326224@upc.edu.pe', 'Luis Felipe Huaranca Berrospi', 'intibank', '967807471', 'USER');
 INSERT INTO public.bank_user(email, name, password, phone, role) VALUES ('u20231d758@upc.edu.pe', 'Yerson Santiago Peralta Pastor', 'intibank', '939675806', 'USER');
