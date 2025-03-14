@@ -9,22 +9,22 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 @Service
 public class ServiceTypeTypeNegocio implements IServiceTypeNegocio {
 
     @Autowired
-    IServiceTypeRepositorio serviceTypeRepositorio;
+    IServiceTypeRepositorio iserviceTypeRepositorio;
 
     @Override
     public List<ServiceType> listarTipoServicio() {
-        return serviceTypeRepositorio.findAll();    //select * from TBL_TIPO_SERVICIO
+        return iserviceTypeRepositorio.findAll();    //select * from TBL_TIPO_SERVICIO
     }
 
-
-
-
-
-
+    @Override
+    public ServiceType buscarTipoServicioPorTipo(Long codigo) {
+        return iserviceTypeRepositorio.findById(codigo).orElse(null);
+    }
 
 
 }

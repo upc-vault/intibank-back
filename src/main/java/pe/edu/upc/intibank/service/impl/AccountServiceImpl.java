@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pe.edu.upc.intibank.entity.Account;
+import pe.edu.upc.intibank.entity.ServiceType;
 import pe.edu.upc.intibank.entity.User;
 import pe.edu.upc.intibank.mapper.AccountMapper;
 import pe.edu.upc.intibank.model.account.AccountResponseModel;
@@ -14,6 +15,7 @@ import pe.edu.upc.intibank.service.AccountService;
 import pe.edu.upc.intibank.utils.Utils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -66,4 +68,18 @@ public class AccountServiceImpl implements AccountService {
 
         return cardNumber;
     }
+
+
+    @Override
+    public List<AccountResponseModel> getAccountsByUserId(Long userId) { // Verifica esta línea
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User with id " + userId + " not found"));
+
+        List<Account> accounts = accountRepository.findAllByUser(user);
+
+        return accounts.stream()
+                .map(accountMapper::toResponseModel)
+                .collect(Collectors.toList());
+    }
+
 }

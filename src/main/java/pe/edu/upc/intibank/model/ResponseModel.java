@@ -10,9 +10,10 @@ import org.springframework.http.HttpStatus;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ResponseModel {
+public class ResponseModel{
     private HttpStatus status;
     private boolean success;
     private Object data;
     private Object errors;
+    private String message; //#Chris
 }

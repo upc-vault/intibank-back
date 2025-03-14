@@ -1,14 +1,15 @@
 package pe.edu.upc.intibank.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.intibank.model.ResponseModel;
+import pe.edu.upc.intibank.model.account.AccountResponseModel;
 import pe.edu.upc.intibank.service.AccountService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/accounts")
@@ -40,4 +41,27 @@ public class AccountController {
                         .build()
         );
     }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<ResponseModel> getAccountsByUserId(@PathVariable Long userId) {
+        try {
+            List<AccountResponseModel> accounts = accountService.getAccountsByUserId(userId);
+            return ResponseEntity.ok(
+                    ResponseModel.builder()
+                            .status(HttpStatus.OK)
+                            .success(true)
+                            .data(accounts) // No necesitamos especificar el tipo genérico aquí
+                            .build()
+            );
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    ResponseModel.builder()
+                            .status(HttpStatus.NOT_FOUND)
+                            .success(false)
+                            .message(e.getMessage())
+                            .build()
+            );
+        }
+    }
+
 }

@@ -9,6 +9,6 @@ public interface IServiceTypeNegocio {
 
     public List<ServiceType> listarTipoServicio();
 
-
+    public ServiceType buscarTipoServicioPorTipo(Long id);
 
 }

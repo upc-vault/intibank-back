@@ -9,15 +9,20 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/intibank")
 public class ServiceTypeRest {
 
     @Autowired
     private IServiceTypeNegocio serviceTypeNegocio;
 
-    @GetMapping("/servicios") //http://localhost:8090/api/servicios
+    @GetMapping("/servicios") //http://localhost:8090/intibank/servicios
     public List<ServiceType> listarTipoServicio() {
         return serviceTypeNegocio.listarTipoServicio();
+    }
+
+    @GetMapping("/tiposervicio/{id}") //http://localhost:8090/intibank/tiposervicio/{id}
+    public ServiceType buscarTipoServicioPorTipo(@PathVariable(value = "id") Long id) {
+        return serviceTypeNegocio.buscarTipoServicioPorTipo(id);
     }
 
 }
