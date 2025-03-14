@@ -42,26 +42,4 @@ public class AccountController {
         );
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<ResponseModel> getAccountsByUserId(@PathVariable Long userId) {
-        try {
-            List<AccountResponseModel> accounts = accountService.getAccountsByUserId(userId);
-            return ResponseEntity.ok(
-                    ResponseModel.builder()
-                            .status(HttpStatus.OK)
-                            .success(true)
-                            .data(accounts) // No necesitamos especificar el tipo genérico aquí
-                            .build()
-            );
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    ResponseModel.builder()
-                            .status(HttpStatus.NOT_FOUND)
-                            .success(false)
-                            .message(e.getMessage())
-                            .build()
-            );
-        }
-    }
-
 }

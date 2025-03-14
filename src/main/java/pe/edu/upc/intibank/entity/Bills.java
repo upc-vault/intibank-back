@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Data
@@ -34,10 +34,10 @@ public class Bills {
     private String numeroSuministro;
 
     @Column(name = "fecha_emision")
-    private LocalDate fechaEmision;
+    private Date fechaEmision;
 
     @Column(name = "fecha_vencimiento")
-    private LocalDate fechaVencimiento;
+    private Date fechaVencimiento;
 
     @Column(name = "monto")
     private BigDecimal monto;

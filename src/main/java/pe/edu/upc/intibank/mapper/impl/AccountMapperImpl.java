@@ -7,6 +7,7 @@ import pe.edu.upc.intibank.model.account.AccountResponseModel;
 
 @Component
 public class AccountMapperImpl implements AccountMapper {
+
     @Override
     public AccountResponseModel toResponseModel(Account account) {
         return AccountResponseModel

@@ -69,17 +69,4 @@ public class AccountServiceImpl implements AccountService {
         return cardNumber;
     }
 
-
-    @Override
-    public List<AccountResponseModel> getAccountsByUserId(Long userId) { // Verifica esta línea
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User with id " + userId + " not found"));
-
-        List<Account> accounts = accountRepository.findAllByUser(user);
-
-        return accounts.stream()
-                .map(accountMapper::toResponseModel)
-                .collect(Collectors.toList());
-    }
-
 }

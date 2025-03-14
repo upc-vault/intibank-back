@@ -11,5 +11,4 @@ public interface AccountService {
 
     List<AccountResponseModel> getMyAccounts();
 
-    List<AccountResponseModel> getAccountsByUserId(Long userId);
 }
