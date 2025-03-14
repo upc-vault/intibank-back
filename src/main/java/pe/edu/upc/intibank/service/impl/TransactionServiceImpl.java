@@ -14,7 +14,9 @@ import pe.edu.upc.intibank.model.transaction.WithdrawRequestModel;
 import pe.edu.upc.intibank.repository.AccountRepository;
 import pe.edu.upc.intibank.repository.TransactionRepository;
 import pe.edu.upc.intibank.service.TransactionService;
+import pe.edu.upc.intibank.model.transaction.TransferRequestModel;
 
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -66,4 +68,47 @@ public class TransactionServiceImpl implements TransactionService {
         account.setBalance(account.getBalance() + amount);
         accountRepository.save(account);
     }
+
+    @Override
+    public TransactionResponseModel transfer(TransferRequestModel request) {
+        Account fromAccount = accountRepository.findById(request.getFromAccountId())
+                .orElseThrow(() -> new IllegalArgumentException("Cuenta de origen no encontrada"));
+        Account toAccount = accountRepository.findById(request.getToAccountId())
+                .orElseThrow(() -> new IllegalArgumentException("Cuenta de destino no encontrada"));
+
+        if (!fromAccount.getUser().getId().equals(toAccount.getUser().getId())) {
+            throw new BadCredentialsException("Ambas cuentas deben pertenecer al mismo usuario");
+        }
+
+        if (fromAccount.equals(toAccount)) {
+            throw new BadCredentialsException("las cuentas deben ser distintas");
+        }
+
+
+        if (fromAccount.getBalance() < request.getAmount()) {
+            throw new LowBalanceException("Saldo insuficiente en la cuenta de origen");
+        }
+
+        // Realizar la transferencia
+        fromAccount.setBalance(fromAccount.getBalance() - request.getAmount());
+        toAccount.setBalance(toAccount.getBalance() + request.getAmount());
+
+        // Guardar cambios en la base de datos
+        accountRepository.save(fromAccount);
+        accountRepository.save(toAccount);
+
+        // Registrar la transacción con timestamp
+        Transaction transaction = new Transaction();
+        transaction.setAmount(request.getAmount());
+        transaction.setNotes("Transferencia entre cuentas");
+        transaction.setType(TransactionType.TRANSFER);
+        transaction.setAccount(fromAccount);
+        transaction.setTimestamp(LocalDate.now()); // 🔹 Se asigna la fecha y hora actual
+
+        transactionRepository.save(transaction);
+
+        return TransactionMapper.toResponse(transaction);
+
+    }
+
 }

@@ -7,6 +7,7 @@ import pe.edu.upc.intibank.entity.TransactionType;
 import pe.edu.upc.intibank.mapper.TransactionMapper;
 import pe.edu.upc.intibank.model.transaction.TransactionResponseModel;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Component
@@ -19,7 +20,7 @@ public class TransactionMapperImpl implements TransactionMapper {
                 .amount(amount)
                 .account(account)
                 .type(type)
-                .timestamp(new Date())
+                .timestamp(LocalDate.now())
                 .notes("Account Balance" + account.getBalance())
                 .build();
     }
@@ -33,4 +34,6 @@ public class TransactionMapperImpl implements TransactionMapper {
                 .balance(balance)
                 .build();
     }
+
+
 }

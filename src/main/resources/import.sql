@@ -1,3 +1,9 @@
+
+--Eliminar transaction_type_check del objeto transaction
+ALTER TABLE IF EXISTS public.transaction
+    ADD CONSTRAINT transaction_type_check CHECK (type::text = ANY (ARRAY['DEPOSIT'::character varying, 'TRANSFER'::character varying, 'WITHDRAW'::character varying]::text[]));
+
+
 INSERT INTO public.bank_user(email, name, password, phone, role) VALUES ('u201723834@upc.edu.pe', 'Christian Enrique Delgado Sanchez', 'intibank', '956254710', 'USER');
 INSERT INTO public.bank_user(email, name, password, phone, role) VALUES ('u202326224@upc.edu.pe', 'Luis Felipe Huaranca Berrospi', 'intibank', '967807471', 'USER');
 INSERT INTO public.bank_user(email, name, password, phone, role) VALUES ('u20231d758@upc.edu.pe', 'Yerson Santiago Peralta Pastor', 'intibank', '939675806', 'USER');
@@ -102,6 +108,12 @@ INSERT INTO public.tbl_recibo (id_user, id_proveedor, numero_suministro, fecha_e
 
 
 
-
-
-
+INSERT INTO transaction (id, amount, notes, timestamp, type, account_id)
+VALUES
+    (1, 100.00, 'Depósito inicial', '2025-03-10 08:30:00', 'DEPOSIT', 9),
+    (2, 50.00, 'Transferencia a cuenta 10', '2025-03-11 10:15:00', 'TRANSFER', 9),
+    (3, 50.00, 'Recepción de transferencia desde cuenta 9', '2025-03-11 10:16:00', 'TRANSFER', 10),
+    (4, 20.00, 'Retiro en cajero', '2025-03-12 14:00:00', 'WITHDRAW', 11),
+    (5, 30.00, 'Transferencia a cuenta 12', '2025-03-13 09:45:00', 'TRANSFER', 11),
+    (6, 30.00, 'Recepción de transferencia desde cuenta 11', '2025-03-13 09:46:00', 'TRANSFER', 12),
+    (7, 200.00, 'Depósito en sucursal', '2025-03-14 11:30:00', 'DEPOSIT', 10);
