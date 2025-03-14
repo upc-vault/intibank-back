@@ -13,5 +13,11 @@ public interface IBillsNegocio {
 
     List<BillsResponseModel> getMyRecibos();
 
+    List<Bills> findByNumeroSuministroAndEstadoPagoOrderByFechaEmisionAsc(String numeroSuministro, String estadoPago);
+
+    Bills save(Bills bill);
+
+    Bills findById(Long id);
+
 
 }

@@ -15,4 +15,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findByCardNumber(String cardNumber);
 
     Optional<Account> findByCardNumberAndCvv(String cardNumber, String cvv);
+
+    Optional<Account> findById(Long id);
+
 }

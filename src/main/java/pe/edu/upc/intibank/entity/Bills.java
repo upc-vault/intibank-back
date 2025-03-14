@@ -45,4 +45,5 @@ public class Bills {
 
     @Column(name = "estado_pago")
     private String estadoPago;
+
 }

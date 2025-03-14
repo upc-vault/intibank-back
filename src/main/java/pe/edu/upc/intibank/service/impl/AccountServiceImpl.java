@@ -15,6 +15,7 @@ import pe.edu.upc.intibank.service.AccountService;
 import pe.edu.upc.intibank.utils.Utils;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -69,4 +70,15 @@ public class AccountServiceImpl implements AccountService {
         return cardNumber;
     }
 
+
+    @Override
+    public Optional<Account> findById(Long id) {
+        return accountRepository.findById(id);
+    }
+
+
+    @Override
+    public Account save(Account account) {
+        return accountRepository.save(account);
+    }
 }

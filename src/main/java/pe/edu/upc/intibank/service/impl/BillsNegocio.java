@@ -49,4 +49,19 @@ public class BillsNegocio implements IBillsNegocio {
                 .collect(Collectors.toList());
     }
 
+
+    @Override
+    public List<Bills> findByNumeroSuministroAndEstadoPagoOrderByFechaEmisionAsc(String numeroSuministro, String estadoPago) {
+        return ibillsRepositorio.findByNumeroSuministroAndEstadoPagoOrderByFechaEmisionAsc(numeroSuministro, estadoPago);
+    }
+
+    @Override
+    public Bills save(Bills bill) {
+        return ibillsRepositorio.save(bill);
+    }
+
+    @Override
+    public Bills findById(Long id) {
+        return ibillsRepositorio.findById(id).orElse(null);
+    }
 }
